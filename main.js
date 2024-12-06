@@ -15,13 +15,13 @@ submit.addEventListener("click",function () {
         let vote = document.createElement("div");
         vote.className = "vote";
         let plusSpan = document.createElement("span");
-        plusSpan.className = "plus"
+        plusSpan.className = "plusSubmite"
         let plusImg = document.createElement("img");
         plusImg.src = "./images/icon-plus.svg";
         let minsSpan = document.createElement("span");
         let minsImg = document.createElement("img");
         minsImg.src = "./images/icon-minus.svg";
-        minsSpan.className = "mins"
+        minsSpan.className = "minssubmit"
         let numSpan = document.createElement("span");
         numSpan.className = "num"
         numSpan.innerHTML = "0"
@@ -53,10 +53,10 @@ submit.addEventListener("click",function () {
                 reply.classList.add("repl");
                     // reply content 
                     let divOne = document.createElement("div");
-                    divOne.className = "deleted"
+                    divOne.className = "deltedSubmit"
                     divOne.innerHTML = `<img src="./images/icon-delete.svg""/>delete`
                     let divTwo = document.createElement("div");
-                      divTwo.className = "edite"
+                      divTwo.className = "editeSubmit"
                     divTwo.innerHTML = `<img src="./images/icon-edit.svg"/>edite`
                 reply.append(divOne);
                 reply.append(divTwo);
@@ -76,10 +76,14 @@ submit.addEventListener("click",function () {
         commentDiv.append(mainComment);
         allComents.appendChild(commentDiv);
         textArea.value = "";
-        deletedfun()
-        editeFun()
-        plusFun();
-        minsFun()
+        let plusSubmite = document.querySelectorAll(".plusSubmite");
+        let minssubmit = document.querySelectorAll(".minssubmit");
+        let editeSubmit = document.querySelectorAll(".editeSubmit");
+        let deltedSubmit = document.querySelectorAll(".deltedSubmit");
+        plusFun(plusSubmite);
+        minsFun(minssubmit)
+        editeFun(editeSubmit)
+        deletedfun(deltedSubmit)
     }
 });
 function replying() {
@@ -95,7 +99,6 @@ replayBtns.forEach((reply) => {
             clonedBtn.className = "cloned"
             clonedBtn.id ="";
             clonedBtn.innerHTML = "reply";
-            console.log(parent)
             clonedTextArea.value = "@"+tagName.innerHTML+" ";
             clonedComment.setAttribute("data-tag",`@${tagName.innerHTML} `)
             parent.append(clonedComment);
@@ -110,11 +113,11 @@ replayBtns.forEach((reply) => {
             let vote = document.createElement("div");
             vote.className = "vote";
             let plusSpan = document.createElement("span");
-            plusSpan.className = "plus";
+            plusSpan.className = "plusRepl";
             let plusImg = document.createElement("img");
             plusImg.src = "./images/icon-plus.svg";
             let minsSpan = document.createElement("span");
-            minsSpan.className = "mins"
+            minsSpan.className = "minsRepl"
             let minsImg = document.createElement("img");
             minsImg.src = "./images/icon-minus.svg";
             let numSpan = document.createElement("span");
@@ -144,10 +147,10 @@ replayBtns.forEach((reply) => {
              reply.classList.add("repl");
                  // reply content 
                  let divOne = document.createElement("div");
-                  divOne.className = "deleted"
+                  divOne.className = "deletedRepl"
                  divOne.innerHTML = `<img src="./images/icon-delete.svg""/>delete`
                  let divTwo = document.createElement("div");
-                 divTwo.className = "edite"
+                 divTwo.className = "editeRepl"
                  divTwo.innerHTML = `<img src="./images/icon-edit.svg"/>edite`
              reply.append(divOne);
              reply.append(divTwo);
@@ -171,20 +174,21 @@ replayBtns.forEach((reply) => {
                 e.target.parentElement.parentElement.children[1].append(mainComment)
              }
               e.target.parentElement.remove();
-                deletedfun()
-                editeFun()
-                plusFun()
-                minsFun()
+                let plusRepl = document.querySelectorAll(".plusRepl")
+                let minsRepl = document.querySelectorAll(".minsRepl");
+                let editeRepl = document.querySelectorAll(".editeRepl");
+                let deletedRepl = document.querySelectorAll(".deletedRepl");
+                deletedfun(deletedRepl)
+                plusFun(plusRepl)
+                minsFun(minsRepl)
+                editeFun(editeRepl)
             })
         })
     }
     })
 });
 }
-replying()
-deletedfun()
-editeFun();
-minsFun();
+
 async function fetchData() {
     let response = await fetch("./data.json");
     let data = await response.json();
@@ -200,13 +204,13 @@ async function fetchData() {
             let vote = document.createElement("div");
             vote.classList.add("vote");
             let spanOne = document.createElement("span");
-            spanOne.className = "plus";
+            spanOne.className = "plusjson";
             spanOne.innerHTML = `<img src='./images/icon-plus.svg'/>`
             let spantwo = document.createElement("span");
             spantwo.className = "num";
             spantwo.innerHTML = comments[i].score;
             let spanthree = document.createElement("span");
-            spanthree.className = "mins";
+            spanthree.className = "minsjson";
             spanthree.innerHTML = `<img src='./images/icon-minus.svg'/>`
             vote.append(spanOne)
             vote.append(spantwo)
@@ -227,25 +231,26 @@ async function fetchData() {
                 date.innerHTML = comments[i].createdAt;
                 header.appendChild(img)
                 header.appendChild(h2);
-                header.appendChild(date)
                 if(comments[i].user.username ==  "juliusomo") {
                     let you = document.createElement("div");
                     you.innerHTML= "you";
                     you.className = "you";
                     header.appendChild(you);
+                    header.appendChild(date);
                     mainComment.classList.add("me");
                     let reply = document.createElement("div");
                     reply.classList.add("repl");
                         // reply content 
                         let divOne = document.createElement("div");
-                         divOne.className = "deleted"
+                         divOne.className = "deletedjson"
                         divOne.innerHTML = `<img src="./images/icon-delete.svg""/>delete`
                         let divTwo = document.createElement("div");
-                        divTwo.className = "edite"
+                        divTwo.className = "editerjson"
                         divTwo.innerHTML = `<img src="./images/icon-edit.svg"/>edite`
-                    reply.append(divOne);
-                    reply.append(divTwo);
-                }else {
+                        reply.append(divOne);
+                        reply.append(divTwo);
+                    }else {
+                    header.appendChild(date);
                     let reply = document.createElement("div");
                     reply.innerHTML = `<img src="./images/icon-reply.svg"/>reply`
                     reply.className = "reply";
@@ -272,13 +277,13 @@ async function fetchData() {
                     let vote = document.createElement("div");
                     vote.classList.add("vote");
                     let spanOne = document.createElement("span");
-                    spanOne.className = "plus";
+                    spanOne.className = "plusjson";
                      spanOne.innerHTML = `<img src='./images/icon-plus.svg'/>`
                     let spantwo = document.createElement("span");
                     spantwo.className = "num";
                     spantwo.innerHTML = comments[i].replies[j].score;
                     let spanthree = document.createElement("span");
-                    spanthree.className = "mins";
+                    spanthree.className = "minsjson";
                     spanthree.innerHTML = `<img src='./images/icon-minus.svg'/>`
                     vote.append(spanOne)
                     vote.append(spantwo)
@@ -300,30 +305,31 @@ async function fetchData() {
                         date.innerHTML = comments[i].replies[j].createdAt;
                         header.appendChild(img)
                         header.appendChild(h2)
-                        header.appendChild(date)
                         if(comments[i].replies[j].user.username ==  "juliusomo") {
                             let you = document.createElement("div");
                             you.innerHTML= "you";
                             you.className = "you";
                             header.appendChild(you);
+                            header.appendChild(date)
                             mainComment.classList.add("me");
                             let reply = document.createElement("div");
                             let divOne = document.createElement("div");
                             reply.className = "repl"
-                            divOne.className = "deleted"
-                           divOne.innerHTML = `<img src="./images/icon-delete.svg""/>delete`
+                            divOne.className = "deletedjson"
+                            divOne.innerHTML = `<img src="./images/icon-delete.svg""/>delete`
                            let divTwo = document.createElement("div");
-                           divTwo.className = "edite"
+                           divTwo.className = "editerjson"
                            divTwo.innerHTML = `<img src="./images/icon-edit.svg"/>edite`
                        reply.append(divOne);
                        reply.append(divTwo);
                        header.appendChild(reply);
                     }else {
+                        header.appendChild(date)
                         let reply = document.createElement("div");
                         reply.innerHTML = `<img src="./images/icon-reply.svg"/>reply`
                         reply.className = "reply";
                         header.appendChild(reply);
-                        }
+                    }
                     let p = document.createElement("p");
                     let tag = document.createElement("span");
                     tag.className = "tag";
@@ -343,17 +349,20 @@ async function fetchData() {
         localStorage.setItem("comments",allComents.innerHTML);
         allComents.append(comment)
     }
-    console.log(data.comments);
-    deletedfun()
-    editeFun()
-    plusFun()
-    minsFun()
+    let plusjso = document.querySelectorAll(".plusjson")
+    let minsjson = document.querySelectorAll(".minsjson")
+    let editerjson = document.querySelectorAll(".editerjson")
+    let deletedjson = document.querySelectorAll(".deletedjson")
+    plusFun(plusjso)
+    minsFun(minsjson)
+    editeFun(editerjson)
+    deletedfun(deletedjson)
     replying()
 }
 
 fetchData() 
-function deletedfun() {
-    let deleted = document.querySelectorAll(".deleted")
+function deletedfun(deleted) {
+    if(deleted != null){
     deleted.forEach((del) => {
         del.addEventListener("click",function (e) {
         if(e.target.tagName == "DIV") {
@@ -361,15 +370,14 @@ function deletedfun() {
         }
         })
     })
-
+}
 }
 
-function editeFun() {
-let edited = document.querySelectorAll(".edite");
+function editeFun(edited) {
+    if(edited != null) {
 edited.forEach((edit) => {
   edit.addEventListener("click",function (e) {
       if(e.target.tagName == "DIV") {
-        console.log(e.target)
          e.target.parentElement.parentElement.nextElementSibling.contentEditable = true;
          e.target.parentElement.parentElement.nextElementSibling.focus()
           if(e.target.parentElement.parentElement.nextElementSibling.children[0]){
@@ -382,6 +390,7 @@ edited.forEach((edit) => {
               e.target.parentElement.parentElement.nextElementSibling.style.outline = "none";
               e.target.parentElement.parentElement.nextElementSibling.style.maxWidth = "100%";
           }
+          
           let updateBtn = document.createElement("button");
           updateBtn.innerHTML = "UPDATE";
           updateBtn.className = "up"
@@ -402,11 +411,12 @@ edited.forEach((edit) => {
    })
 })
 }
+}
 
-function plusFun() {
-    let plus = document.querySelectorAll(".plus");
-plus.forEach((plus) => {
-    plus.addEventListener("click" , function (e) {
+function plusFun(plus) {
+ 
+plus.forEach((plu) => {
+    plu.addEventListener("click" , function (e) {
         if(e.target.tagName == "SPAN") {
             // let numStop = +e.target.nextElementSibling.innerHTML + 1;
                 e.target.nextElementSibling.innerHTML++
@@ -421,12 +431,12 @@ plus.forEach((plus) => {
 })
 }
 
-function minsFun() {
-    let mins = document.querySelectorAll(".mins");
-    mins.forEach((mins) => {
-    mins.addEventListener("click" , function (e) {
+function minsFun(mins) {
+  
+    mins.forEach((min) => {
+    min.addEventListener("click" , function (e) {
+        
       if(e.target.tagName == "SPAN") {
-        console.log(e.target)
           if( +e.target.previousElementSibling.innerHTML > 0 ){
               e.target.previousElementSibling.innerHTML--;
               e.target.style.pointerEvents = "none";
@@ -445,4 +455,3 @@ function minsFun() {
 });
 }
 
-plusFun();

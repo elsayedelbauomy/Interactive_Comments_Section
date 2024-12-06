@@ -55,6 +55,9 @@ main {
                     /* font-size: em; */
                 }
             }
+            & span:nth-child(3) {
+                pointer-events: none;
+            }
         }
         & .content {
             max-width: 90%;
@@ -82,7 +85,6 @@ main {
                     font-weight: bold;
                     font-size: 1.1em;
                     display: flex;
-                    poi
                     align-items: center;
                     gap: 5px;
                     cursor: pointer;
@@ -118,6 +120,7 @@ main {
            }
         }
         & div:nth-child(2) {
+            color: var(--Moderate-blue);
             &:hover {
                 opacity: .5;
             }
@@ -161,6 +164,7 @@ main {
        align-items: flex-start;
        gap: 10px;
        background: var(--White);
+       border-radius: 7px;
        padding: 1em 2em;
        & img {
         width: 40px;
@@ -208,4 +212,42 @@ main {
 
 .up {
     margin-left: auto;
+}
+
+@media (max-width:768px) {
+    main {
+        width: 100%;
+        padding: 20px;
+    }
+
+    main .mainComment {
+        flex-direction: column-reverse;
+        position: relative;
+        padding: 1em !important;
+    }
+
+    main .reply , .repl {
+        position: absolute;
+        bottom: 30px;
+        right: 20px;
+    }
+
+    main .vote {
+        flex-direction: row !important;
+        padding: 5px 15px !important;
+        gap: 15px !important;
+        align-items: center !important;
+    }
+
+    main .addComment {
+        flex-direction: column-reverse;
+        position: relative;
+    }
+
+    main .addComment button {
+        position: absolute;
+        bottom: 15px;
+        right: 15px;
+        padding: 1em !important;
+    }
 }
