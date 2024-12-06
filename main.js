@@ -2,6 +2,8 @@ const submit = document.getElementById("submit");
 const textArea = document.getElementById("textArea");
 const addComment = document.getElementById("addComment");
 const allComents = document.querySelector(".allComents");
+const main = document.querySelector("main");
+const overlay = document.querySelector(".overlay");
 submit.addEventListener("click",function () {
     if(textArea.value != "") {
         // creat comment div 
@@ -96,12 +98,16 @@ replayBtns.forEach((reply) => {
             let clonedTextArea = clonedComment.children[1];
             let tagName = e.target.parentElement.children[1];
             let clonedBtn = clonedComment.children[2];
-            clonedBtn.className = "cloned"
+            clonedBtn.className = "cloned";
             clonedBtn.id ="";
             clonedBtn.innerHTML = "reply";
             clonedTextArea.value = "@"+tagName.innerHTML+" ";
             clonedComment.setAttribute("data-tag",`@${tagName.innerHTML} `)
             parent.append(clonedComment);
+            window.scrollTo({
+                top:clonedComment.offsetTop,
+                behavior:"smooth"
+            })
             let clonedbtn = document.querySelectorAll(".cloned") ;
         clonedbtn.forEach((btn) => {
             btn.addEventListener("click" ,function (e) {
@@ -173,6 +179,7 @@ replayBtns.forEach((reply) => {
              }else if(e.target.parentElement.parentElement.classList.contains("comment")) {
                 e.target.parentElement.parentElement.children[1].append(mainComment)
              }
+
               e.target.parentElement.remove();
                 let plusRepl = document.querySelectorAll(".plusRepl")
                 let minsRepl = document.querySelectorAll(".minsRepl");
@@ -365,9 +372,53 @@ function deletedfun(deleted) {
     if(deleted != null){
     deleted.forEach((del) => {
         del.addEventListener("click",function (e) {
-        if(e.target.tagName == "DIV") {
-            e.target.parentElement.parentElement.parentElement.parentElement.remove()
-        }
+            if(e.target.tagName == "DIV"){
+            let parent = e.target.parentElement.parentElement.parentElement.parentElement;
+        let deleteContainer = document.createElement("div");
+        deleteContainer.className = "deltedContainer";
+        let h2 = document.createElement("h2");
+        h2.innerHTML = "delte comment";
+        let p = document.createElement("p");
+        p.innerHTML = "are you sure you want to delete this comment? this will remove the comment and can't be undone.";
+        let buttonsContainer = document.createElement("div");
+        buttonsContainer.setAttribute("class","buttons");
+        let cancel = document.createElement("button");
+        cancel.classList.add("cancel")
+        cancel.innerHTML = "no, cancel"
+        let yes = document.createElement("button");
+        yes.innerHTML = "yes, delete"
+        yes.className = "yes";
+        buttonsContainer.append(cancel)
+        buttonsContainer.append(yes)
+       deleteContainer.appendChild(h2)
+       deleteContainer.appendChild(p)
+       deleteContainer.appendChild(buttonsContainer);
+        main.append(deleteContainer);
+        overlay.style.display = "block";
+        let buutonsClicked = document.querySelectorAll(".buttons button");
+        let scrollAx = document.querySelector(".deltedContainer")
+                console.log(scrollAx.offsetTop)
+                window.scrollTo({
+                    top: scrollAx.offsetTop, // Scroll to the top position of the element
+                    behavior: 'smooth'    // Smooth scrolling
+                });
+
+        buutonsClicked.forEach(btn => {
+            if(btn != null) {
+                btn.addEventListener("click", function (e) {
+                   if(e.target.classList.contains("yes")) {
+                    parent.remove();
+                    overlay.style.display = "none";
+                    e.target.parentElement.parentElement.remove()
+                   }else {
+                    overlay.style.display = "none";
+                    e.target.parentElement.parentElement.remove()
+                   }
+                })
+            }
+        })
+     
+            }
         })
     })
 }
